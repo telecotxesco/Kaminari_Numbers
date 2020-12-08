@@ -1,2 +1,197 @@
 # Kaminari_Numbers
-Kaminari Numbers is a mod script for Transport Fever 2 that allows to print random serial numbers on similar models without the need of duplicating model files.
+
+**Please, read carefully the following document.
+
+## Overview
+On Transport Fever it is not possible to assign to each unit a unique serial number (like UIC identification numbers) because the game engine loads and generates the model once when loading the game, and after that the model remains static on memory. It's possible to randomize somehow the numbering at the beggining, but after that it remains the same across all the models of the same unit. That means that all the locomotives of the same model will show the same number during the game.
+
+**KAMINARI NUMBERS** is a mod script that allows to print random serial numbers on similar models without the need of duplicating model files.
+
+## What KAMINARI NUMBERS can do
+* Place numbers and uppercase letters over any model (trains, planes, trucks, buildings, ...).
+* Show different numbers or letters across all the same models placed on map, creating the sensation that every model has its own identification number.
+* Create lists of consecutive numbers, from a starting number to a final one (i.e. from 30 to 59).
+* Cicle through numbers consecutively or randomly.
+* Create lists of identification numbers that combines letters and numbers, being able to randomize each position from a list of allowed characters.
+* Create your own list of identification numbers manually.
+* The last number assigned on each unit is persisted when saving and quitting the game and loading it after.
+* Paint the letters with any color, either RGB or descriptive (i.e. "white", "darkblue", ...)
+* Letters become dirt over the time.
+* Change the size, position and rotation of the letters.
+
+## What KAMINARI NUMBERS can NOT do
+* A number on a unit can not be persisted over the time. It changes after some time.
+* Two or more units can have the same generated number at the same time. The shorter the list of numbers, the higher probabilities two units share the same number.
+* When placing a new unit on map, tt's not possible to shuffle the starting number, so all the units will show the same number for the first time.
+* Only numbers, uppercase letters and dot (.), hyphen (-) and slash (/) are available. No lowercase letters or other characters are available.
+
+## When or how I should avoid using KAMINARU NUMBERS
+* It is not intended to do all the static labels because of the inefficiency it may introduce. There are other mods available that can do this in a more efficient way.
+* Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
+
+# How it works
+**KAMINARI NUMBERS** is based on these mechanics:
+* Each character, number or letter, is a rectangular mesh which texture defined is the character with transparency.
+* A list of different identification numbers is defined and the script generates the group of all meshes (children) that are included to the model.
+* The group of meshes contains all the identification numbers available. i.e. if 20 numbers are generated, each model contains the 20 numbers superposed on the same coordinates.
+* The group of meshes are linked to a very slow **loop forever animation** where only one of the generated numbers at a time is on the defined coordinates, and the rest of the numbers are slighty backward (a few centimeters).
+* All the animations and materials are dinamically created. First load time may take some time but these files are preserved so next time less time is spent loading the savegame.
+
+With this tricks the user have the sensation that only one number is shown at a time, and because of the continuous loop animation after some time the units starts showing different numbers (even if two units are build at the same time).
+
+# How to use it
+To use this script, it is needed to make **KAMINARI NUMBERS** dependant of the mod you are making. Modders can use and link **KAMINARI NUMBERS** with no need to ask previous permission under this premises:
+* This mod has to be marked as dependant on the workshop.
+* Mention that the mod uses **KAMINARI NUMBERS**.
+* The user needs to be warned that, in order to this mod work properly, **KAMINARI NUMBERS** needs to be loaded before the rest of the mods on the load priority mod list.
+
+**No modification of the mod is recommended unless you know what are you doing. A bad usage of this mod (modification) can lead to unstable working of the game. If you want to extend any feature, please contact me and I will be glad to support.**
+
+## Usages
+There are two types of functions in the script:
+
+* Functions to aid generating lists of numbers and letters.
+* Functions to generate the mesh group to be added to the model.
+
+## Previous preparation
+First, as it is expected modders work under staging area folder, you need to first copy the **KAMINARI NUMBERS** mod files inside the mod you are working with. This are the folders:
+* models: there are the meshes of the letters.
+* scripts: this is where the kaminari_numbers.lua script is located.
+* textures: there are the tipographies available.
+
+**IMPORTANT:** Keep in mind later these files will be need to be deleted prior publishing them on workshop. They are easily identified under "kaminari_numbers" subfolders on each category.
+
+After that, from the model you want to add the numbers, find the model (.MDL) file (usuarlly under res/models/model/vehicles/train/).
+
+# Initializing KAMINARI NUMBERS on the model
+The first thing to do is to initialize the script. This can be easily done by adding this line on top of the MDL file
+
+```lua
+local kaminari_numbers = require "kaminari_numbers"
+```
+
+After that, you will have something like:
+
+```lua
+local kaminari_numbers = require "kaminari_numbers"
+function data()
+	return {
+		boundingInfo = {
+			bbMax = { 10.068499565125, 1.4601999521255, 5.6757001876831, },
+			bbMin = { -10.068499565125, -1.4601999521255, 0.18279999494553, },
+		},
+		
+		-- Rest of the model data [...]
+	
+	}
+end
+```
+
+**NOTE:** Before continuing, try loading the model on the ModelEditor before proceding, in order to get sure the *KAMINARI NUMBERS* are loaded properly.
+
+Between the `function data()` line and the `return {` line you need to add the following lines:
+
+```lua
+  local function generateNumbers()
+		return { 
+			children = {
+				-- Call Kaminari_Numbers functions here:
+			}
+		}
+	end
+
+	local numberPlates = generateNumbers()
+```
+
+In this local function *generateNumbers* we will generate dinamically the meshes needed for the number and letters of the model, which function is called and stored on a local variable we call *numberPlates* (you can name as your convenience).
+
+The first lines of the mod now become:
+
+```lua
+local kaminari_numbers = require "kaminari_numbers"
+function data()
+	local function generateNumbers()
+		return { 
+			children = {
+				-- Call Kaminari_Numbers functions here:
+			}
+		}
+	end
+
+	local numberPlates = generateNumbers()
+	
+	return {
+		-- REST OF THE MODEL [...]
+```
+
+Then, scroll down under the model until you find the first "lod" children, something like:
+
+```lua
+  lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = {
+							"vehicle/train/db_v100/db_v100.mtl",
+						},
+						mesh = "vehicle/train/db_v100/body_lod0.msh",
+						name = "body",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+					{
+						-- MULTIPLE MODEL MESHES [...]
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 200.0,
+		},
+```
+
+Just after the **LAST** children node, right before the "name = "RootNode"", add the *numberPlates* local variable reference. It is important to be at the last position in order to avoid messing with the forwardFrontParts, normally used for showing or hidding the train lights depending the direction of movement.
+
+Somehow it will become like this:
+
+```lua
+  lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { 
+							"vehicle/train/db_v100/db_v100.mtl", 
+						},
+						mesh = "vehicle/train/db_v100/body_lod0.msh",
+						name = "body",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+					{
+						-- MULTIPLE MODEL MESHES [...]
+					},
+					numberPlates -- HERE WE ADD THE VARIABLE CALL
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 200.0,
+		},
+```
+
+**NOTE:** The model may have many LOD defined (level of details), each one with visibleFrom and visibleTo distances. Consider referencing the local variable *numberPlates* only if the distance is close enough to be shown or not.
+
+# Generating the numbers
+There are multiple ways to generate the numbers. On each one, we will modify the generateNumbers local function defined at the beggining of the model.
+
+## Simple static number
+To add a number, simply call the following function:
+
+```lua
+kaminari_numbers.getChildrenColorNumber( {"V 100-1035","V 100-1023"} , "white", "Helvetica", 10.0, 2.20, -1.00, 2.05, 180, 0, 0 ),
+```
+
