@@ -1,6 +1,6 @@
 # Kaminari_Numbers
 
-** Please, refer to the [[Wiki|wiki]] for details.
+** Please, refer to the [Wiki](https://github.com/telecotxesco/Kaminari_Numbers/wiki) for details.
 
 ## Overview
 On Transport Fever it is not possible to assign to each unit a unique serial number (like UIC identification numbers) because the game engine loads and generates the model once when loading the game, and after that the model remains static on memory. It's possible to randomize somehow the numbering at the beggining, but after that it remains the same across all the models of the same unit. That means that all the locomotives of the same model will show the same number during the game.
