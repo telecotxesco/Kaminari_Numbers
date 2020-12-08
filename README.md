@@ -1,6 +1,6 @@
 # Kaminari_Numbers
 
-**Please, read carefully the following document.
+** Please, refer to the [[Wiki|wiki]] for details.
 
 ## Overview
 On Transport Fever it is not possible to assign to each unit a unique serial number (like UIC identification numbers) because the game engine loads and generates the model once when loading the game, and after that the model remains static on memory. It's possible to randomize somehow the numbering at the beggining, but after that it remains the same across all the models of the same unit. That means that all the locomotives of the same model will show the same number during the game.
@@ -28,40 +28,6 @@ On Transport Fever it is not possible to assign to each unit a unique serial num
 ## When or how I should avoid using KAMINARU NUMBERS
 * It is not intended to do all the static labels because of the inefficiency it may introduce. There are other mods available that can do this in a more efficient way.
 * Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
-
-# How it works
-**KAMINARI NUMBERS** is based on these mechanics:
-* Each character, number or letter, is a rectangular mesh which texture defined is the character with transparency.
-* A list of different identification numbers is defined and the script generates the group of all meshes (children) that are included to the model.
-* The group of meshes contains all the identification numbers available. i.e. if 20 numbers are generated, each model contains the 20 numbers superposed on the same coordinates.
-* The group of meshes are linked to a very slow **loop forever animation** where only one of the generated numbers at a time is on the defined coordinates, and the rest of the numbers are slighty backward (a few centimeters).
-* All the animations and materials are dinamically created. First load time may take some time but these files are preserved so next time less time is spent loading the savegame.
-
-With this tricks the user have the sensation that only one number is shown at a time, and because of the continuous loop animation after some time the units starts showing different numbers (even if two units are build at the same time).
-
-# How to use it
-To use this script, it is needed to make **KAMINARI NUMBERS** dependant of the mod you are making. Modders can use and link **KAMINARI NUMBERS** with no need to ask previous permission under this premises:
-* This mod has to be marked as dependant on the workshop.
-* Mention that the mod uses **KAMINARI NUMBERS**.
-* The user needs to be warned that, in order to this mod work properly, **KAMINARI NUMBERS** needs to be loaded before the rest of the mods on the load priority mod list.
-
-**No modification of the mod is recommended unless you know what are you doing. A bad usage of this mod (modification) can lead to unstable working of the game. If you want to extend any feature, please contact me and I will be glad to support.**
-
-## Usages
-There are two types of functions in the script:
-
-* Functions to aid generating lists of numbers and letters.
-* Functions to generate the mesh group to be added to the model.
-
-## Previous preparation
-First, as it is expected modders work under staging area folder, you need to first copy the **KAMINARI NUMBERS** mod files inside the mod you are working with. This are the folders:
-* models: there are the meshes of the letters.
-* scripts: this is where the kaminari_numbers.lua script is located.
-* textures: there are the tipographies available.
-
-**IMPORTANT:** Keep in mind later these files will be need to be deleted prior publishing them on workshop. They are easily identified under "kaminari_numbers" subfolders on each category.
-
-After that, from the model you want to add the numbers, find the model (.MDL) file (usuarlly under res/models/model/vehicles/train/).
 
 # Initializing KAMINARI NUMBERS on the model
 The first thing to do is to initialize the script. This can be easily done by adding this line on top of the MDL file
