@@ -29,14 +29,18 @@ On Transport Fever it is not possible to assign to each unit a unique serial num
 * It is not intended to do all the static labels because of the inefficiency it may introduce. There are other mods available that can do this in a more efficient way.
 * Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
 
-#Quick start
+# Quick start
 1) Instanciate the script
 2) Create a list of numbers with `buildListOfNumbers` or `generateRandomCharacters`
 3) Create a list of groups of numbers ready to be put on the model LOD subnode with `getChildrenColorNumber` or `getChildrenRGBNumber`
 4) Append on the last element of the LOD in the model the list groups created on 3)
 
-##Example
+# :warning: **IMPORTANT** :warning:
+### ¡WHEN USING ModelEditor, DO NOT SAVE THE MODEL!
+#### ModelEditor when you press the SAVE button, it **REMOVES** all the LUA code and *flattens* all the model into a static *no-code* model. Saving a model that uses of *KAMINARI NUMBERS* will make the *flatten* model file size **VERY MUCH** and also will loose all the code writed on the model before to generate the lists of numbers.
+#### Consider making backup copies of your model often.
 
+## Example
 This is how the model will look like:
 ```lua
 local kaminari_numbers = require "kaminari_numbers"
