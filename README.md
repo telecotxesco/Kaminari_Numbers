@@ -42,60 +42,59 @@ This is how the model will look like:
 local kaminari_numbers = require "kaminari_numbers"
 
 function data()
-	-- Generation of the plates: this will create numbers like 1001, 1002, ... 1035.
-	local numberPlates = kaminari_numbers.buildListOfNumbers( 1, 35, true, 3, "1", "" )
+        -- Generation of the plates: this will create numbers like 1001, 1002, ... 1035.
+        local numberPlates = kaminari_numbers.buildListOfNumbers( 1, 35, true, 3, "1", "" )
 
-	-- With this loop, we will create a secondary list derived from the first, in order
-	-- to match the numbers
-	local largeNumberPlates = {}
-	for i, singleNumberPlate in ipairs(numberPlates) do
-		table.insert( largeNumberPlates, "V 100-" .. singleNumberPlate )
-	end
+        -- With this loop, we will create a secondary list derived from the first, in order
+        -- to match the numbers
+        local largeNumberPlates = {}
+        for i, singleNumberPlate in ipairs(numberPlates) do
+                table.insert( largeNumberPlates, "V 100-" .. singleNumberPlate )
+        end
 
-	-- Generation of the groups of numbers to display
-	-- These two will be a big label with only que number like 1001, 1002, ... 1035
-	local platesLeft  = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  3.90,  1.00, 2.05,   0, 0, 0 )
-	local platesRight = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  1.90, -1.00, 2.05, 180, 0, 0 )
+        -- Generation of the groups of numbers to display
+        -- These two will be a big label with only que number like 1001, 1002, ... 1035
+        local platesLeft  = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  3.90,  1.00, 2.05,   0, 0, 0 )
+        local platesRight = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  1.90, -1.00, 2.05, 180, 0, 0 )
 		
-	-- These two will generate a larger label, derived from the mail numberPlates list, 
-	-- but on front and rear of the unit
-	local platesFront = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0,  6.01, -0.38, 1.45, -90, 0, 0 )
-	local platesBack  = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0, -6.31,  0.38, 1.45,  90, 0, 0 )
+        -- These two will generate a larger label, derived from the mail numberPlates list, 
+        -- but on front and rear of the unit
+        local platesFront = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0,  6.01, -0.38, 1.45, -90, 0, 0 )
+        local platesBack  = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0, -6.31,  0.38, 1.45,  90, 0, 0 )
 	
 -- HERE BEGINS THE USUAL RETURN DATA OF THE MODEL
 return {
-	boundingInfo = {
-		bbMax = { 6.7790122032166, 1.5564205646515, 4.2407073974609, },
-		bbMin = { -7.0255718231201, -1.5564205646515, -0.036832869052887, },
-	},
-  -- the rest of the model ... 
+    boundingInfo = {
+        bbMax = { 6.7790122032166, 1.5564205646515, 4.2407073974609, },
+        bbMin = { -7.0255718231201, -1.5564205646515, -0.036832869052887, },
+    },
+    -- the rest of the model ... 
 ```
 
 And inside each LOD you want to be the numbers shown, usually LOD0 and LOD1, append at the **end** of the meshes the lists of groups defined at the beggining. In the case of this example, `platesLeft`,`platesRight`,`platesFront` and `platesBack`:
 ```lua
-{
-            -- THE LAST LOD MESH NODE ELEMENT
-						materials = { "vehicle/train/emissive/train_red_lights.mtl", },
-						mesh = "vehicle/train/db_v100/breaklights_back_lod0.msh",
-						name = "breaklights_back",
-						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
-					},
-          -- OUR GROUP OF NUMBERS
-					platesLeft,
-					platesRight,
-					platesFront,
-					platesBack
-				},
-				name = "RootNode",
-				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+                    -- THE LAST LOD MESH NODE ELEMENT
+		    {
+                        materials = { "vehicle/train/emissive/train_red_lights.mtl", },
+                        mesh = "vehicle/train/db_v100/breaklights_back_lod0.msh",
+                        name = "breaklights_back",
+                        transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+                    },
+                    -- OUR GROUP OF NUMBERS
+                    platesLeft,
+                    platesRight,
+                    platesFront,
+                    platesBack
+                },
+                name = "RootNode",
+                transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+            },
+            static = false,
+            visibleFrom = 0,
+            visibleTo = 200.0,
         },
-			static = false,
-			visibleFrom = 0,
-			visibleTo = 200.0,
-		},
     -- END OF LOD0, BEGINING OF LOD1
-		{
-			node = {
-				children = {
-        
+        {
+            node = {
+                children = {
 ```
