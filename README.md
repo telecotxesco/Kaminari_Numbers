@@ -28,3 +28,74 @@ On Transport Fever it is not possible to assign to each unit a unique serial num
 ## When or how I should avoid using KAMINARU NUMBERS
 * It is not intended to do all the static labels because of the inefficiency it may introduce. There are other mods available that can do this in a more efficient way.
 * Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
+
+#Quick start
+1) Instanciate the script
+2) Create a list of numbers with `buildListOfNumbers` or `generateRandomCharacters`
+3) Create a list of groups of numbers ready to be put on the model LOD subnode with `getChildrenColorNumber` or `getChildrenRGBNumber`
+4) Append on the last element of the LOD in the model the list groups created on 3)
+
+##Example
+
+This is how the model will look like:
+```lua
+local kaminari_numbers = require "kaminari_numbers"
+
+function data()
+	-- Generation of the plates: this will create numbers like 1001, 1002, ... 1035.
+	local numberPlates = kaminari_numbers.buildListOfNumbers( 1, 35, true, 3, "1", "" )
+
+	-- With this loop, we will create a secondary list derived from the first, in order
+	-- to match the numbers
+	local largeNumberPlates = {}
+	for i, singleNumberPlate in ipairs(numberPlates) do
+		table.insert( largeNumberPlates, "V 100-" .. singleNumberPlate )
+	end
+
+	-- Generation of the groups of numbers to display
+	-- These two will be a big label with only que number like 1001, 1002, ... 1035
+	local platesLeft  = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  3.90,  1.00, 2.05,   0, 0, 0 )
+	local platesRight = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  1.90, -1.00, 2.05, 180, 0, 0 )
+		
+	-- These two will generate a larger label, derived from the mail numberPlates list, 
+	-- but on front and rear of the unit
+	local platesFront = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0,  6.01, -0.38, 1.45, -90, 0, 0 )
+	local platesBack  = kaminari_numbers.getChildrenColorNumber( largeNumberPlates , "white", "Helvetica",  4.0, -6.31,  0.38, 1.45,  90, 0, 0 )
+	
+-- HERE BEGINS THE USUAL RETURN DATA OF THE MODEL
+return {
+	boundingInfo = {
+		bbMax = { 6.7790122032166, 1.5564205646515, 4.2407073974609, },
+		bbMin = { -7.0255718231201, -1.5564205646515, -0.036832869052887, },
+	},
+  -- the rest of the model ... 
+```
+
+And inside each LOD you want to be the numbers shown, usually LOD0 and LOD1, append at the **end** of the meshes the lists of groups defined at the beggining. In the case of this example, `platesLeft`,`platesRight`,`platesFront` and `platesBack`:
+```lua
+{
+            -- THE LAST LOD MESH NODE ELEMENT
+						materials = { "vehicle/train/emissive/train_red_lights.mtl", },
+						mesh = "vehicle/train/db_v100/breaklights_back_lod0.msh",
+						name = "breaklights_back",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+          -- OUR GROUP OF NUMBERS
+					platesLeft,
+					platesRight,
+					platesFront,
+					platesBack
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+        },
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 200.0,
+		},
+    -- END OF LOD0, BEGINING OF LOD1
+		{
+			node = {
+				children = {
+        
+```
