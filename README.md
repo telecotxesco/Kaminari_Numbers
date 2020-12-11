@@ -102,3 +102,5 @@ And inside each LOD you want to be the numbers shown, usually LOD0 and LOD1, app
             node = {
                 children = {
 ```
+
+![example](https://github.com/telecotxesco/Kaminari_Numbers/blob/main/img/example1.jpg?raw=true)
