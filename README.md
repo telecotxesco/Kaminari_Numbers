@@ -44,6 +44,10 @@ If you are planning to work with the model on staging_area folder and view it wi
 #### Consider making backup copies of your model often.
 
 ## Example
+We will modify the V100 in-game model in order to add 2 numbers on the sides, and one in front and in back like this:
+
+![example](https://github.com/telecotxesco/Kaminari_Numbers/blob/main/img/example1.jpg?raw=true)
+
 This is how the model will look like:
 ```lua
 local kaminari_numbers = require "kaminari_numbers"
@@ -106,4 +110,3 @@ And inside each LOD you want to be the numbers shown, usually LOD0 and LOD1, app
                 children = {
 ```
 
-![example](https://github.com/telecotxesco/Kaminari_Numbers/blob/main/img/example1.jpg?raw=true)
