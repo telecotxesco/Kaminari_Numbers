@@ -1,4 +1,5 @@
 # Kaminari_Numbers
+![example](https://github.com/telecotxesco/Kaminari_Numbers/blob/main/img/banner.jpg?raw=true)
 
 Please, refer to the [Wiki](https://github.com/telecotxesco/Kaminari_Numbers/wiki) for details.
 
