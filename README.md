@@ -43,11 +43,11 @@ local numberPlates = kaminari_numbers.buildListOfNumbers( 1, 35, true, 3, "1", "
 ```
 3) Create a list of groups of numbers ready to be put on the model LOD subnode with `getChildrenColorNumber` or `getChildrenRGBNumber`
 ```lua
-local platesLeft  = kaminari_numbers.getChildrenColorNumber( numberPlates      , "white", "Helvetica", 24.0,  3.90,  1.00, 2.05,   0, 0, 0 )
+local plates = kaminari_numbers.getChildrenColorNumber( numberPlates, "white", "Helvetica", 24.0,  3.90, 1.00, 2.05, 0, 0, 0 )
 ```
 4) Append on the last element of the LOD in the model the list groups created on step 3.
 ```lua
-platesLeft
+plates
 ```
 
 # :information_source: Staging_area and ModelEditor
