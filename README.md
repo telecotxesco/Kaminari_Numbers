@@ -8,6 +8,8 @@ On Transport Fever it is not possible to assign to each unit a unique serial num
 
 **KAMINARI NUMBERS** is a mod script that allows to print random serial numbers on similar models without the need of duplicating model files.
 
+You can subsribe to **KAMINARI NUMBERS** on the (Steam Workshop)[https://steamcommunity.com/workshop/managerequireditems/?id=2312549569/]
+
 ## :heavy_check_mark: What KAMINARI NUMBERS can do
 * Place numbers and uppercase letters over any model (trains, planes, trucks, buildings, ...).
 * Show different numbers or letters across all the same models placed on map, creating the sensation that every model has its own identification number.
