@@ -59,7 +59,7 @@ If you are planning to work with the model on staging_area folder and view it wi
 #### Consider making backup copies of your model often.
 
 ## Example
-We will modify the V100 in-game model in order to add 2 numbers on the sides, and one in front and in back like this:
+The model is on the example folder. We will modify the V100 in-game model in order to add 2 numbers on the sides, and one in front and in back like this:
 
 ![example](https://github.com/telecotxesco/Kaminari_Numbers/blob/main/img/example1.jpg?raw=true)
 
