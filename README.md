@@ -33,7 +33,7 @@ You can subsribe to **KAMINARI NUMBERS** on the [Steam Workshop](https://steamco
 * Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
 
 # Quick start
-1) Instanciate the script (avoid this way of direct require. Instead refer [initializing script](https://github.com/telecotxesco/Kaminari_Numbers/wiki/Initializing-KAMINARI-NUMBERS-on-the-model) to see a better way,
+1) Instanciate the script :warning: **avoid this way of direct require. Instead refer [initializing script](https://github.com/telecotxesco/Kaminari_Numbers/wiki/Initializing-KAMINARI-NUMBERS-on-the-model) to see a better way**
 ```lua 
 local kaminari_numbers = require "kaminari_numbers"
 ```
