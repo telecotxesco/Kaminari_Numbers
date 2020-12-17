@@ -28,7 +28,7 @@ You can subsribe to **KAMINARI NUMBERS** on the [Steam Workshop](https://steamco
 * When placing a new unit on map, tt's not possible to shuffle the starting number, so all the units will show the same number for the first time.
 * Only numbers, uppercase letters and dot (.), hyphen (-) and slash (/) are available. No lowercase letters or other characters are available.
 
-## :point_up: When or how I should avoid using KAMINARU NUMBERS
+## :point_up: When or how I should avoid using KAMINARI NUMBERS
 * It is not intended to do all the static labels because of the inefficiency it may introduce. There are other mods available that can do this in a more efficient way.
 * Avoid using hundreds of number variations. Units that may have 2, 4, or even 6 times the number printed. Each digit is a mesh (2 polygons) and each variation introduced is also N times the mesh generated. That means if 100 of variations are defined for a 6 digit plate, and it is on 6 different parts of the unit, that sums 3.600 meshes present that equals 7.200 poligons that are added to **each** model present and inside the LOD. **USE WITH CAUTION AND MODERATION TO AVOID MAYOR SLOWDOWN TO THE GAME**
 
